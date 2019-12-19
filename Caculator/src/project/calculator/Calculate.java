@@ -4,40 +4,44 @@ import java.util.Stack;
 
 public class Calculate {
 	
-	
 	public void calculate(Stack<String> stack, int check) {
-		int o = 0;
-		double num2 = Double.parseDouble(stack.pop());
-		double num1 = -1;
+		int op = 0;
+		String str = stack.pop();		
+		double num2 = Double.parseDouble(str);
+		double num1 = 0;
+		
+		
 		
 		while(!stack.isEmpty()) {
 			String temp = stack.pop();
-			if((temp.equals("-") || temp.equals("+")) && check == 0) {
+
+			if(check == 0 && (temp.equals("-") || temp.equals("+"))) {
 				stack.push(temp);
 				break;
 			}
+
+			
 			if(temp.equals("+") || temp.equals("-") || temp.equals("÷") || temp.equals("x")) {
+				
+				if(op == 1) num2 = num1 + num2;
+				else if(op == 2) num2 = num1 - num2;
+				else if(op == 3) num2 = num1 * num2;
+				else if(op == 4) num2 = num1 / num2;
+				
 
-				if(o == 1) num2 = num1 + num2;
-				else if(o == 2) num2 = num1 - num2;
-				else if(o == 3) num2 = num1 * num2;
-				else if(o == 4) num2 = num1 / num2;
-
-				if(temp.equals("+")) o = 1;
-				else if(temp.equals("-")) o = 2;
-				else if(temp.equals("x")) o = 3;
-				else if(temp.equals("÷")) o = 4;
-
-
+				if(temp.equals("+")) op = 1;
+				else if(temp.equals("-")) op = 2;
+				else if(temp.equals("x")) op = 3;
+				else if(temp.equals("÷")) op = 4;
 
 			}
 			else num1 = Double.parseDouble(temp); 
 		}
-		if(o == 1) num1 += num2;
-		else if(o == 2) num1 -= num2;
-		else if(o == 3) num1 *= num2;
-		else if(o == 4) num1 /= num2;
-		else if(o == 0) num1 = num2;
+		if(op == 1) num1 += num2;
+		else if(op == 2) num1 -= num2;
+		else if(op == 3) num1 *= num2;
+		else if(op == 4) num1 /= num2;
+		else if(op == 0) num1 = num2;
 		
 		
 		String temp = String.valueOf(num1);
